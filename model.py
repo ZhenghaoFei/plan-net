@@ -105,9 +105,11 @@ class A3CPolicy(object):
         self.x = x = tf.placeholder(tf.float32, [None] + list(ob_space))
 
         # CNN feature extraction
-        x = layers.convolution2d(x, num_outputs=16, kernel_size=8, stride=4, padding='SAME', activation_fn=tf.nn.relu)
-        x = layers.convolution2d(x, num_outputs=32, kernel_size=4, stride=2, padding='SAME', activation_fn=tf.nn.relu) 
+        x = layers.convolution2d(x, num_outputs=32, kernel_size=8, stride=4, padding='SAME', activation_fn=tf.nn.relu)
+        x = layers.convolution2d(x, num_outputs=64, kernel_size=4, stride=2, padding='SAME', activation_fn=tf.nn.relu) 
+        x = layers.convolution2d(x, num_outputs=64, kernel_size=3, stride=1, padding='SAME', activation_fn=tf.nn.relu) 
         x = tf.expand_dims(flatten(x), [0])
+        x = layers.fully_connected(layers.flatten(x), num_outputs=512, activation_fn=tf.nn.relu)
 
         # LSTM
         size = 256
